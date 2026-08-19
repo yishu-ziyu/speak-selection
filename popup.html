@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>划词朗读</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div class="mark" aria-hidden="true">读</div>
+      <div>
+        <h1>划词朗读</h1>
+        <p class="sub">MiniMax 发音 · 跟读学习</p>
+      </div>
+    </header>
+    <p id="status" class="status">检查配置…</p>
+    <label class="field">
+      <span>试听文本</span>
+      <textarea id="text" rows="3" placeholder="输入或粘贴单词、句子">pronunciation</textarea>
+    </label>
+    <div class="row">
+      <button id="speak" class="primary" type="button">朗读</button>
+      <button id="slow" type="button">慢读</button>
+      <button id="stop" type="button">停止</button>
+    </div>
+    <p id="hint" class="hint">网页上划词后，点选区旁的金色按钮即可。</p>
+    <footer>
+      <button id="options" class="link" type="button">打开设置</button>
+      <span>快捷键 Alt+S</span>
+    </footer>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

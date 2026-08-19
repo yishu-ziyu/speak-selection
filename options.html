@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>划词朗读 · 设置</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="kicker">Chrome 扩展</p>
+        <h1>划词朗读</h1>
+        <p class="lede">把 MiniMax 的声音接到网页划词上。密钥只保存在这台电脑的 Chrome 里，不会写进项目文件。</p>
+      </header>
+
+      <section>
+        <h2>1. 接入 MiniMax</h2>
+        <p class="help">用本机已有的 <code>MINIMAX_API_KEY</code>，或上秋子里的 TTS Key。可运行扩展目录中的 <code>scripts/copy-api-key-to-clipboard.sh</code> 复制到剪贴板，再粘贴到这里。</p>
+        <label class="field">
+          <span>API Key</span>
+          <input id="apiKey" type="password" autocomplete="off" placeholder="sk-cp-…" />
+        </label>
+        <p id="keyMeta" class="meta"></p>
+        <label class="check">
+          <input id="showKey" type="checkbox" />
+          <span>显示密钥</span>
+        </label>
+      </section>
+
+      <section>
+        <h2>2. 声音</h2>
+        <label class="field">
+          <span>音色</span>
+          <select id="voiceId"></select>
+        </label>
+        <label class="field">
+          <span>自定义 voice_id（可选）</span>
+          <input id="customVoiceId" type="text" placeholder="例如克隆音色 ID" />
+        </label>
+        <label class="field">
+          <span>模型</span>
+          <select id="model"></select>
+        </label>
+        <label class="field">
+          <span>语种增强</span>
+          <select id="languageBoost"></select>
+        </label>
+      </section>
+
+      <section>
+        <h2>3. 跟读手感</h2>
+        <label class="field">
+          <span>语速 <em id="speedVal">1.00</em></span>
+          <input id="speed" type="range" min="0.5" max="2" step="0.05" />
+        </label>
+        <label class="field">
+          <span>音量 <em id="volVal">1.0</em></span>
+          <input id="vol" type="range" min="0.1" max="2" step="0.1" />
+        </label>
+        <label class="field">
+          <span>音高 <em id="pitchVal">0</em></span>
+          <input id="pitch" type="range" min="-12" max="12" step="1" />
+        </label>
+        <label class="field">
+          <span>单次最长字符</span>
+          <input id="maxChars" type="number" min="20" max="10000" step="20" />
+        </label>
+        <label class="check">
+          <input id="showChip" type="checkbox" />
+          <span>划词后显示朗读条</span>
+        </label>
+        <label class="check">
+          <input id="autoSpeak" type="checkbox" />
+          <span>划词后自动朗读（容易误触，默认关闭）</span>
+        </label>
+        <label class="check">
+          <input id="textNormalization" type="checkbox" />
+          <span>数字和缩写按口语读（稍慢，跟读更清楚）</span>
+        </label>
+      </section>
+
+      <section>
+        <h2>试听</h2>
+        <label class="field">
+          <span>试听句子</span>
+          <input id="previewText" type="text" value="The word pronunciation is easier when you hear it." />
+        </label>
+        <div class="row">
+          <button id="save" class="primary" type="button">保存设置</button>
+          <button id="preview" type="button">保存并试听</button>
+          <button id="stop" type="button">停止</button>
+        </div>
+        <p id="saveMsg" class="meta" role="status"></p>
+      </section>
+    </main>
+    <script type="module" src="options.js"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+.DS_Store
+.env
+.env.local
+*.mp3
+*.wav
+node_modules/
