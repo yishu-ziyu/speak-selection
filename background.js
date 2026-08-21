@@ -100,6 +100,13 @@ async function handleMessage(message, sender) {
       speaking: Boolean(inflight)
     };
   }
+  if (type === "HX_GET_CHIP_SETTINGS") {
+    const settings = await loadSettings();
+    return {
+      showChip: settings.showChip !== false,
+      autoSpeak: settings.autoSpeak === true
+    };
+  }
   if (type === "HX_REPLAY") {
     if (!lastPlay) return { ok: false, error: "还没有朗读过" };
     return speakFromTab(sender.tab && sender.tab.id, lastPlay.text, lastPlay.pace || "normal");
