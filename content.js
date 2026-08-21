@@ -95,7 +95,7 @@
     host.style.all = "initial";
     host.style.position = "fixed";
     host.style.zIndex = "2147483646";
-    shadow = host.attachShadow({ mode: "open" });
+    shadow = host.attachShadow({ mode: "closed" });
     shadow.innerHTML = `
       <style>${STYLE}</style>
       <div class="wrap" part="wrap">
@@ -108,9 +108,16 @@
         <div class="toast" role="status"></div>
       </div>
     `;
-    shadow.querySelector(".speak").addEventListener("click", () => speak("normal"));
-    shadow.querySelector(".slow").addEventListener("click", () => speak("slow"));
-    shadow.querySelector(".stop").addEventListener("click", () => {
+    shadow.querySelector(".speak").addEventListener("click", (e) => {
+      if (!e.isTrusted) return;
+      speak("normal");
+    });
+    shadow.querySelector(".slow").addEventListener("click", (e) => {
+      if (!e.isTrusted) return;
+      speak("slow");
+    });
+    shadow.querySelector(".stop").addEventListener("click", (e) => {
+      if (!e.isTrusted) return;
       chrome.runtime.sendMessage({ type: "HX_STOP" }).catch(() => {});
       status = "idle";
       setLoading(false);
@@ -214,19 +221,23 @@
       return;
     }
     lastText = text;
-    chrome.storage.local.get("hxSpeakSettings").then((bag) => {
-      const settings = bag.hxSpeakSettings || {};
+    chrome.runtime.sendMessage({ type: "HX_GET_CHIP_SETTINGS" }).then((res) => {
+      const settings = res || {};
       if (settings.showChip !== false) showChip(text, rect);
       if (settings.autoSpeak === true) speak("normal");
+    }).catch(() => {
+      showChip(text, rect);
     });
   }
 
   document.addEventListener("mouseup", (e) => {
+    if (!e.isTrusted) return;
     if (host && (e.target === host || host.contains(e.target))) return;
     setTimeout(onMaybeSelect, 0);
   }, true);
 
   document.addEventListener("keyup", (e) => {
+    if (!e.isTrusted) return;
     if (e.key === "Shift" || e.key.startsWith("Arrow") || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "a")) {
       setTimeout(onMaybeSelect, 0);
     }
